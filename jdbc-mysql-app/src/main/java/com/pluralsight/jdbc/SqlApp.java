@@ -1,6 +1,10 @@
 package com.pluralsight.jdbc;
 
+import org.apache.commons.dbcp2.BasicDataSource;
+
+import javax.sql.DataSource;
 import java.sql.*;
+import java.util.Scanner;
 
 public class SqlApp {
 
@@ -8,41 +12,71 @@ public class SqlApp {
 
     public static void main(String[] args) {
 
+        BasicDataSource dataSource;
+        dataSource=new BasicDataSource();
+
+
+
         String url="jdbc:mysql://localhost:3306/cardealership";
         String user="root";
         String password="yearup";
 
-        try (Connection connection = DriverManager.getConnection(url,user,password)){
+        dataSource.setUrl(url);
+        dataSource.setUsername(user);
+        dataSource.setPassword(password);
 
-            Statement statement= connection.createStatement();
+        Scanner scanner= new Scanner(System.in);
+        boolean running=true;
 
-            ResultSet resultSet= statement.executeQuery("SELECT * FROM dealerships");
-          //  ResultSet resultSet1= statement.executeQuery("SELECT vehicle_make, vehicle_model,vehicle_price FROM vehicles");
-            ResultSet resultSet2= statement.executeQuery("""
-    SELECT 
-    v.make AS vehicle_make,
-    v.model AS vehicle_model,
-    v.price AS vehicle_price,
-    d.name AS dealership_name,
-    c.customerName AS customer_name,
-    c.customerEmail AS customer_email
-FROM vehicles v
-JOIN inventory i ON v.vin = i.vin
-JOIN dealerships d ON i.dealershipID = d.dealershipID
-JOIN contract c ON v.vin = c.vin
-WHERE v.sold = TRUE;
-                    """);
-            while (resultSet2.next()) {
 
-                //System.out.println(resultSet.getString("name")+ ": "+ resultSet.getString("address")+". "+ resultSet.getString("phone"));
-                System.out.println( resultSet2.getString(1)+ " " + resultSet2.getString(2)+" "+resultSet2.getString(3));
+        try (Connection connection = dataSource.getConnection()){
+
+            PreparedStatement insertStatement= connection.prepareStatement("INSERT INTO vehicles (vin,year,make,model,vehicleType,color,odometer,price,sold)" +
+                    "VALUES (?,?,?,?,?,?,?,?,?);");
+
+            while (running){
+                System.out.println("Enter the VIN you are looking to insert: ");
+                String vinToInsert= scanner.nextLine();
+                System.out.println("Enter the year you are looking to insert: ");
+                String yearToInsert= scanner.nextLine();
+                System.out.println("Enter the make you are looking to insert: ");
+                String makeToInsert= scanner.nextLine();
+                System.out.println("Enter the model you are looking to insert: ");
+                String modelToInsert= scanner.nextLine();
+                System.out.println("Enter the vehicleType you are looking to insert: ");
+                String typeToInsert= scanner.nextLine();
+                System.out.println("Enter the color you are looking to insert: ");
+                String colorToInsert= scanner.nextLine();
+                System.out.println("Enter the odometer you are looking to insert: ");
+                String odometerToInsert= scanner.nextLine();
+                System.out.println("Enter the price you are looking to insert: ");
+                String priceToInsert= scanner.nextLine();
+                System.out.println("Enter 1 for vehicle sold, 0 for vehicles not sold:  ");
+                String soldToInsert= scanner.nextLine();
+
+                insertStatement.setString(1,vinToInsert);
+                insertStatement.setString(2,yearToInsert);
+                insertStatement.setString(3,makeToInsert);
+                insertStatement.setString(4,modelToInsert);
+                insertStatement.setString(5,typeToInsert);
+                insertStatement.setString(6,colorToInsert);
+                insertStatement.setString(7,odometerToInsert);
+                insertStatement.setString(8,priceToInsert);
+                insertStatement.setString(9,soldToInsert);
+                insertStatement.execute();
+
+
             }
 
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
+        try {
+            dataSource.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 }
