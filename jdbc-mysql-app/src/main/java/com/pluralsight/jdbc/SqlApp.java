@@ -12,8 +12,8 @@ public class SqlApp {
         String user="root";
         String password="yearup";
 
-        try {
-            Connection connection = DriverManager.getConnection(url,user,password);
+        try (Connection connection = DriverManager.getConnection(url,user,password)){
+
             Statement statement= connection.createStatement();
 
             ResultSet resultSet= statement.executeQuery("SELECT * FROM dealerships");
@@ -35,7 +35,7 @@ WHERE v.sold = TRUE;
             while (resultSet2.next()) {
 
                 //System.out.println(resultSet.getString("name")+ ": "+ resultSet.getString("address")+". "+ resultSet.getString("phone"));
-                System.out.println(resultSet2.getString(1));
+                System.out.println( resultSet2.getString(1)+ " " + resultSet2.getString(2)+" "+resultSet2.getString(3));
             }
 
 
