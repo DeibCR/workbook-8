@@ -1,5 +1,7 @@
 package dealershipAppJDBC;
 
+import model.*;
+
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Scanner;

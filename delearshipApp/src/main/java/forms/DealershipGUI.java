@@ -1,8 +1,8 @@
 package forms;
 
-import dealershipApp.Dealership;
-import dealershipApp.DealershipFileManager;
-import dealershipApp.Vehicle;
+import model.Dealership;
+import dealershipAppJDBC.DealershipFileManager;
+import model.Vehicle;
 
 import javax.swing.*;
 import java.awt.*;

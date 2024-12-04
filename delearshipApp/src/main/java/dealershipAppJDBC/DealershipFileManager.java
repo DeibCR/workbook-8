@@ -1,5 +1,8 @@
 package dealershipAppJDBC;
 
+import model.Dealership;
+import model.Vehicle;
+
 import java.io.*;
 import java.util.ArrayList;
 

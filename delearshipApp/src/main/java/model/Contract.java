@@ -1,4 +1,4 @@
-package dealershipAppJDBC;
+package model;
 
 public abstract class Contract {
     private String dateOfContract;

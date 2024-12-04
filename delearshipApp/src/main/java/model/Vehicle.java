@@ -1,7 +1,7 @@
-package dealershipAppJDBC;
+package model;
 
 public class Vehicle {
-    private final int vin;
+    private final String vin;
     private final int year;
     private final String make;
     private final String model;
@@ -9,8 +9,9 @@ public class Vehicle {
     private final String color;
     private final int odometer;
     private final double price;
+    private  boolean sold;
 
-    public Vehicle(int vin, int year, String make, String model, String vehicleType, String color, int odometer, double price) {
+    public Vehicle(String vin, int year, String make, String model, String vehicleType, String color, int odometer, double price,boolean sold) {
         this.vin = vin;
         this.year = year;
         this.make = make;
@@ -19,9 +20,10 @@ public class Vehicle {
         this.color = color;
         this.odometer = odometer;
         this.price = price;
+        this.sold=sold;
     }
 
-    public int getVin() {
+    public String getVin() {
         return vin;
     }
 
@@ -51,6 +53,14 @@ public class Vehicle {
 
     public double getPrice() {
         return price;
+    }
+
+    public boolean isSold() {
+        return sold;
+    }
+
+    public void setSold(boolean sold) {
+        this.sold = sold;
     }
 
     @Override

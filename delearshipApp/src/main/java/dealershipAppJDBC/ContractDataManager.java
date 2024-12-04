@@ -1,5 +1,10 @@
 package dealershipAppJDBC;
 
+import model.Contract;
+import model.LeaseContract;
+import model.SalesContract;
+import model.Vehicle;
+
 import java.io.BufferedReader;
 import java.io.*;
 import java.util.ArrayList;

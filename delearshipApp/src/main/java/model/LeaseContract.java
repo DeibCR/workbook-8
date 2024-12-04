@@ -1,8 +1,8 @@
-package dealershipAppJDBC;
+package model;
 
 import java.util.ResourceBundle;
 
-public class LeaseContract extends Contract{
+public class LeaseContract extends Contract {
     private final double expectedEndingValuePercentage;
     private final double leaseFee;
 

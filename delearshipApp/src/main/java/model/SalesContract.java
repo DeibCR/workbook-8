@@ -1,8 +1,11 @@
-package dealershipAppJDBC;
+package model;
+
+import model.Contract;
+import model.Vehicle;
 
 import java.util.ResourceBundle;
 
-public class SalesContract extends Contract{
+public class SalesContract extends Contract {
     private  final double salesTax;
     private final double recordingFee;
     private final double processingFee;
