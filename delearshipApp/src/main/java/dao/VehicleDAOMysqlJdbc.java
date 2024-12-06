@@ -15,7 +15,7 @@ public class VehicleDAOMysqlJdbc implements VehicleDAO{
     }
 
     @Override
-    public Vehicle findVehicleByPrice(double price) {
+    public Vehicle findVehicleByPrice(double maxPrice, double minPrice) {
         String vin ="";
         int year=0;
         String make="";
@@ -29,9 +29,10 @@ public class VehicleDAOMysqlJdbc implements VehicleDAO{
             PreparedStatement statement= connection.prepareStatement("""
                     SELECT *
                     FROM vehicles
-                    WHERE price = ?;
+                    WHERE price BETWEEN ? AND ?;
                     """);
-            statement.setDouble(1,price);
+            statement.setDouble(1,minPrice);
+            statement.setDouble(2,maxPrice);
             ResultSet rs= statement.executeQuery();
 
             if (rs.next()){
